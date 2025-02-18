@@ -5,9 +5,6 @@ on: [push]
   #   tags:
   #   - v*
 
-env:
-  KICAD_TAG: nightly-full
-
 jobs:
   # Generate-local:
   #   runs-on: ubuntu-latest
@@ -20,7 +17,7 @@ jobs:
   Generate-demo:
     runs-on: ubuntu-latest
     container:
-      image: kicad/kicad:$KICAD_TAG
+      image: kicad/kicad:nightly-full
     steps:
     - name: Checkout
       uses: actions/checkout@v4
