@@ -1,0 +1,31 @@
+name: Generate output files
+
+on:
+  push:
+    tags:
+    - v*
+
+env:
+  KICAD_TAG: nightly-full
+
+jobs:
+  # Generate-local:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: kicad/kicad:$KICAD_TAG
+  #   steps:
+  #   - name: Checkout
+  #     uses: actions/checkout@v4
+
+  Generate-demo:
+    runs-on: ubuntu-latest
+    container:
+      image: kicad/kicad:$KICAD_TAG
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - run: ls
+    - run: pwd
+    # - name: Generate files
+    #   run: |
+    #     cp -r /usr/share/kicad/demos/video/ ./
