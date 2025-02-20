@@ -1,9 +1,12 @@
 name: Generate output files
 
-on: [push]
-  # push:
-  #   tags:
-  #   - v*
+on:
+  push:
+    tags:
+    - v*
+
+permissions:
+  contents: write
 
 jobs:
   # Generate-local:
@@ -22,8 +25,14 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - run: ls
-    - run: pwd
-    # - name: Generate files
-    #   run: |
-    #     cp -r /usr/share/kicad/demos/video/ ./
+
+    - name: Generate files
+      run: |
+        cp -r /usr/share/kicad/demos/video ./video
+        cd video
+        kicad-cli jobset run --file ../jlcpcb.kicad_jobset video.kicad_pro
+
+    - name: Create release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: *.zip
